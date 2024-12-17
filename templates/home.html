@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!-- Main Content -->
+    <div class="container text-center">
+        <h1 class="header-text">Download Youtube Video or Audio by Link!</h1>
+        <div class="features">
+            <span><i class="bi bi-download"></i>🌟 Unlimited Downloads</span>
+            <span class="ms-4"><i class="bi bi-check-circle"></i>💎🪄 No Watermark!</span>
+        </div><br><br>
+        
+        <!-- Input Form -->
+        <form method="GET">
+            <div class="input-container mt-4">
+                <input type="text" name="link" class="form-control custom-input" placeholder="Paste link here!">
+                <button type="submit" class="download-btn">Download</button>
+            </div>
+        </form>
+        
+        <!-- Video and Details -->
+        <div class="video">
+            {% if link %}
+            <div class="video mt-5 p-4 rounded" style="background: #1e1e2d; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); color: #fff;">
+                <h2 class="mb-4">{{ title }}</h2>
+                
+                <!-- Thumbnail and Author -->
+                <div class="d-flex justify-content-center align-items-center mb-3">
+                    <img src="{{ thumb }}" alt="Thumbnail" class="rounded" style="width: 200px; height: auto; margin-right: 20px;">
+                    <div>
+                        <p class="mb-1"><strong>Uploaded By:</strong> {{ author }}</p>
+                        <p class="mb-1"><strong>Likes:</strong> 👍 {{ likes }}</p>
+                        <p><strong>Dislikes:</strong> 👎 {{ dislikes }}</p>
+                    </div>
+                </div>
+
+                <!-- Video Streams -->
+                <div class="streams text-start mt-4">
+                    <h4>Video Formats:</h4>
+                    <ul class="list-unstyled">
+                        {% for stream in video_streams %}
+                            <li class="mb-2">
+                                📹 <strong>{{ stream.resolution }}</strong> - 
+                                <a href="{{ stream.url }}" target="_blank" class="btn btn-sm btn-outline-success ms-2">Download</a>
+                            </li>
+                        {% empty %}
+                            <li>No video formats available.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <!-- Audio Streams -->
+                <div class="streams text-start mt-4">
+                    <h4>Audio Formats:</h4>
+                    <ul class="list-unstyled">
+                        {% for stream in audio_streams %}
+                            <li class="mb-2">
+                                🎵 <strong>{{ stream.resolution }}</strong> - 
+                                <a href="{{ stream.url }}" target="_blank" class="btn btn-sm btn-outline-primary ms-2">Download</a>
+                            </li>
+                        {% empty %}
+                            <li>No audio formats available.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
